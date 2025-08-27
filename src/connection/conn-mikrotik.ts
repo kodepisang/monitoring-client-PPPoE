@@ -3,9 +3,9 @@ import { RouterOSClient } from 'routeros-api';
 // Buat fungsi untuk terhubung dan menjalankan perintah
 export const runMikrotikCommand = async () => {
     // Ganti dengan konfigurasi koneksi Anda
-    const host = process.env.MIKROTIK_HOST || '192.168.88.1';
-    const user = process.env.MIKROTIK_USER || 'admin';
-    const password = process.env.MIKROTIK_PASSWORD || 'password';
+    const host = process.env.MIKROTIK_HOST || '192.168.50.1';
+    const user = process.env.MIKROTIK_USER || 'taqim';
+    const password = process.env.MIKROTIK_PASSWORD || '234234';
 
     const api = new RouterOSClient({
         host,
@@ -26,9 +26,11 @@ export const runMikrotikCommand = async () => {
                 .then((result) => {
                     console.log(result); // Mikrotik
                     api.close();
+                    return true;
                 })
                 .catch((err) => {
                     console.log('terjadi err : ', err  ); // Some error trying to get the identity
+                    return false;
                 });
         })
         .catch((err) => {

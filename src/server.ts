@@ -7,11 +7,12 @@ const app = express();
 const PORT = 3000;
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello from Express with TypeScript!');
+    const respon = runMikrotikCommand();
+    res.send(`Hello from Express with TypeScript! ${respon}` );
 });
 
 app.get('/status', (req: Request, res: Response) => {
-    runMikrotikCommand();
+    // runMikrotikCommand();
 });
 
 app.listen(PORT, () => {
