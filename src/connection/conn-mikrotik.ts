@@ -1,7 +1,7 @@
 import { RouterOSClient } from 'routeros-api';
 
 // Buat fungsi untuk terhubung dan menjalankan perintah
-export const runMikrotikCommand = async (command: string, params: object = {}) => {
+export const runMikrotikCommand = async () => {
     // Ganti dengan konfigurasi koneksi Anda
     const host = process.env.MIKROTIK_HOST || '192.168.88.1';
     const user = process.env.MIKROTIK_USER || 'admin';
@@ -11,28 +11,29 @@ export const runMikrotikCommand = async (command: string, params: object = {}) =
         host,
         user,
         password,
-        // Gunakan port yang sesuai, default 8728 untuk API atau 8729 untuk API SSL
         port: 8728,
     });
 
-    try {
-        // Menghubungkan ke MikroTik
-        await api.connect();
-        console.log('Successfully connected to MikroTik.');
+    api.connect()
+        .then((client) => {
+            // After connecting, the promise will return a client class so you can start using it
 
-        // Menjalankan perintah dan mengembalikan hasilnya
-        const result = await api.write(command, params);
-
-        // Menutup koneksi
-        await api.close();
-        console.log('Connection closed.');
-
-        return result;
-    } catch (error) {
-        console.error('An error occurred during API operation:', error);
-        // Jika terjadi error, re-throw agar bisa ditangani di REST API
-        throw error;
-    }
+            // You can either use spaces like the winbox terminal or
+            // use the way the api does like "/system/identity", either way is fine
+            client
+                .menu('/system identity')
+                .getOnly()
+                .then((result) => {
+                    console.log(result); // Mikrotik
+                    api.close();
+                })
+                .catch((err) => {
+                    console.log('terjadi err : ', err  ); // Some error trying to get the identity
+                });
+        })
+        .catch((err) => {
+            // Connection error
+        });
 };
 
 // Contoh penggunaan: Mendapatkan daftar IP
