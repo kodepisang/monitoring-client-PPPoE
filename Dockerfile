@@ -1,12 +1,12 @@
 # Tahap 1: Builder untuk instalasi dan build TypeScript
-FROM node:20-alpine as builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 # Copy package.json dan package-lock.json untuk instalasi dependencies
 COPY package*.json ./
 
-# Instal dependencies, termasuk devDependencies
+# Instal semua dependencies, termasuk devDependencies
 RUN npm ci
 
 # Copy semua file source
@@ -16,18 +16,19 @@ COPY . .
 RUN npm run build
 
 # Tahap 2: Final image yang lebih kecil untuk produksi
-FROM node:20-alpine
+# Nama tahap diubah menjadi "production" agar unik dan deskriptif
+FROM node:20-alpine AS production
 
 # Set working directory di container
 WORKDIR /app
 
-# Copy package.json dari builder untuk instalasi dependencies produksi
+# Copy package.json dari tahap "builder"
 COPY --from=builder /app/package*.json ./
 
 # Instal hanya dependencies produksi (tanpa devDependencies)
 RUN npm ci --omit=dev
 
-# Copy file hasil build dari tahap builder
+# Copy file hasil build dari tahap "builder"
 COPY --from=builder /app/dist ./dist
 
 # Copy file .env
