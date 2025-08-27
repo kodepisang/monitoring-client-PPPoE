@@ -46,13 +46,12 @@ Cuplikan kode
 
 Instal Dependensi:
 Bash
-
-npm install
+    npm install
 
 Jalankan Server Pengembangan:
 Bash
 
-    npm start
+    npm run dev
 
 Server akan berjalan di http://localhost:3000.
 
