@@ -96,6 +96,8 @@ Method|Endpoint|Deskripsi
 ---|---|---
 GET|/api/pppoe/online|Mendapatkan daftar pengguna PPPoE yang online.
 GET|/api/pppoe/secrets|Mendapatkan semua daftar secrets PPPoE
+GET|/api/pppoe/offline|Mendapatkan user yang tyerdaftar pada secreats namun offline
+
 
 📜 License
 
