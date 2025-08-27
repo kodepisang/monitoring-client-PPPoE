@@ -33,7 +33,7 @@ Pastikan Anda memiliki Node.js, npm, dan Git yang terinstal.
 Instalasi
   Clone repositori:
   
-    git clone https://github.com/taqim/monitoring-app.git
+    git clone https://github.com/kodepisang/monitoring-app.git
     cd monitoring-app
 
 Konfigurasi Variabel Lingkungan:
@@ -60,19 +60,18 @@ Server akan berjalan di http://localhost:3000.
 Proyek ini dapat dengan mudah di-deploy ke lingkungan produksi menggunakan Docker.
 Build Docker Image:
 
-    docker build -t ghcr.io/taqim/monitoring-app:latest .
+    docker build -t ghcr.io/kodepisang/monitoring-app:latest .
 
 Push ke GitHub Container Registry (GHCR):
 
-    docker push ghcr.io/taqim/monitoring-app:latest
+    docker push ghcr.io/kodepisang/monitoring-app:latest
 
 Deploy dengan Docker Compose:
 Gunakan docker-compose.yml untuk menjalankan kontainer di server Anda.
 YAML
 
 # docker-compose.yml
-    version: '3.8'
-    
+     
     services:
       backend:
         container_name: monitoring-backend
